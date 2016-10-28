@@ -79,6 +79,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Tools.cs" />
     <Compile Include="TPS.xaml.cs">
       <DependentUpon>TPS.xaml</DependentUpon>
     </Compile>

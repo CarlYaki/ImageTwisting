@@ -10,11 +10,11 @@ namespace ImageTwisting
     {
         internal static double U(double r)
         {
-            return Math.Pow(r, 2) * Math.Log10(Math.Pow(r, 2));
+            return Math.Pow(r, 2) * Math.Log(r/*Math.Pow(r, 2)*/);
         }
         internal static double r(System.Windows.Point p1, System.Windows.Point p2)
         {
-            return Math.Sqrt(Math.Pow(p1.X - p2.X, 2) + Math.Pow(p1.Y - p2.Y, 2));
+            return (p1 - p2).Length;
         }
         internal static double[,] times(double[,] a, int r1, int c1, double[,] b, int r2, int c2)
         {
@@ -35,24 +35,31 @@ namespace ImageTwisting
             }
             return ans;
         }
-        internal static double determinant(double[,] a, int r, int c)
+        internal static double determinant(double[,] mat, int r, int c)
         {
             if (r != c)
                 return 0;
             if (r == 1)
             {
-                return a[0, 0];
+                return mat[0, 0];
             }
+            double[,] a = new double[r, c];
+            for (int i = 0; i < r; ++i)
+                for (int j = 0; j < c; ++j)
+                    a[i, j] = mat[i, j];
             double lambda;
             bool signal = true;
+            bool zero = true;
             for (int i = 0; i < r; ++i)
             {
+                zero = true;
                 if (a[i, i] == 0)
                 {
                     for (int j = i + 1; j < r; ++j)
                     {
                         if (a[j, i] != 0)
                         {
+                            zero = false;
                             for (int k = i; k < c; ++k)
                             {
                                 double temp = a[i, k];
@@ -63,6 +70,8 @@ namespace ImageTwisting
                             break;
                         }
                     }
+                    if (zero)
+                        return 0;
                 }
                 for (int j = i + 1; j < r; ++j)
                 {

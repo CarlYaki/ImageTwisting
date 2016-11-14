@@ -284,6 +284,8 @@ namespace ImageTwisting
                             A[t] = S(u[1] + 1 - t);
                             C[t] = S(v[1] + 1 - t);
                         }
+                        if ((int)Math.Floor(_i) < 1 || (int)Math.Floor(_j) < 1 || (int)Math.Floor(_i) > c - 3 || (int)Math.Floor(_j) > r - 3)
+                            continue;
                         for (int x = 0; x < 4; ++x)
                         {
                             for (int y = 0; y < 4; ++y)

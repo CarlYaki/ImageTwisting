@@ -21,7 +21,7 @@ namespace ImageTwisting
     /// </summary>
     public partial class TPS : Window
     {
-        public TPS()
+        public TPS()//TPS变形
         {
             InitializeComponent();
             flag = false;
@@ -37,6 +37,7 @@ namespace ImageTwisting
         bool flag;
         List<System.Windows.Point> fixPoint, targetPoint;
 
+        //控制点选取
         private void img_MouseDown_1(object sender, MouseButtonEventArgs e)
         {
             choose.IsEnabled = false;
@@ -94,6 +95,8 @@ namespace ImageTwisting
             excute.IsEnabled = !flag;
         }
 
+
+        //清空控制点
         private void clear_Click(object sender, RoutedEventArgs e)
         {
             for (int i = 0; i < fixPoint.Count * 2; ++i)
@@ -115,6 +118,8 @@ namespace ImageTwisting
             choose.IsEnabled = true;
         }
 
+
+        //复原
         private void reset_Click(object sender, RoutedEventArgs e)
         {
             choose.IsEnabled = true;
@@ -128,6 +133,9 @@ namespace ImageTwisting
         int r, c;
         int[, , ,] map;
         string imagesource;
+
+
+        //选择图片
         private void choose_Click(object sender, RoutedEventArgs e)
         {
             fixPoint.Clear();
@@ -187,6 +195,9 @@ namespace ImageTwisting
                 gd.Children.Remove(myLine);
             }
             clear.IsEnabled = false;
+
+
+            //矩阵运算
             int n = fixPoint.Count;
             L = new double[n + 3, n + 3];
             for (int i = 0; i < n + 3; ++i)
@@ -237,6 +248,8 @@ namespace ImageTwisting
             System.Drawing.Color colorForSet;
             IntPtr ip;
             BitmapSource bitmapSource;
+
+            //双三次插值
             for (int i = 0; i < c; ++i)
             {
                 for (int j = 0; j < r; ++j)

@@ -21,7 +21,7 @@ namespace ImageTwisting
     /// </summary>
     public partial class Distort : Window
     {
-        public Distort()
+        public Distort()//图像畸变
         {
             InitializeComponent();
         }
@@ -33,6 +33,7 @@ namespace ImageTwisting
         System.Drawing.Color colorForSet;
         Bitmap tempimg1, tempimg2, tempimg3;
 
+        //选择图片
         private void chooseImg_Click(object sender, RoutedEventArgs e)
         {
             OpenFileDialog op = new Microsoft.Win32.OpenFileDialog();
@@ -96,13 +97,14 @@ namespace ImageTwisting
             if (lambda == 0)
             {
             }
-            else if (lambda > 0)
+            else if (lambda > 0)//向外
             {
                 lambda = 1 - lambda;
                 for (int i = 0; i < c; ++i)
                 {
                     for (int j = 0; j < r; ++j)
                     {
+                        //最近邻插值
                         x_now = i - x0;
                         y_now = y0 - j;
                         _i = x0 + (i - x0) * Math.Sqrt(Math.Pow(lambda, 2) + (Math.Pow(x_now, 2) + Math.Pow(y_now, 2)) / Math.Pow(maxR, 2) * (1 - Math.Pow(lambda, 2)));
@@ -125,6 +127,7 @@ namespace ImageTwisting
                         tempimg1.SetPixel(i, j, colorForSet);
 
 
+                        //双线性插值
                         double temp;
                         if ((int)Math.Floor(_i) < 0 || (int)Math.Floor(_i) >= c - 1 || (int)Math.Floor(_j) < 0 || (int)Math.Floor(_j) >= r - 1)
                         {
@@ -175,6 +178,8 @@ namespace ImageTwisting
                         colorForSet = System.Drawing.Color.FromArgb(map[2, i, j, 0], map[2, i, j, 1], map[2, i, j, 2]);
                         tempimg2.SetPixel(i, j, colorForSet);
 
+
+                        //双三次插值
                         if ((int)Math.Floor(_i) < 1 || (int)Math.Floor(_i) >= c - 2 || (int)Math.Floor(_j) < 1 || (int)Math.Floor(_j) >= r - 2)
                         {
                             for (int k = 0; k < 3; ++k)
@@ -221,13 +226,14 @@ namespace ImageTwisting
                     }
                 }
             }
-            else
+            else//向内
             {
                 lambda = 1 + lambda;
                 for (int i = 0; i < c; ++i)
                 {
                     for (int j = 0; j < r; ++j)
                     {
+                        //最近邻插值
                         x_now = i - x0;
                         y_now = y0 - j;
                         _i = x0 + (i - x0) / Math.Sqrt(Math.Pow(lambda, 2) + (Math.Pow(x_now, 2) + Math.Pow(y_now, 2)) / Math.Pow(maxR, 2) * (1 - Math.Pow(lambda, 2)));
@@ -239,6 +245,8 @@ namespace ImageTwisting
                         colorForSet = System.Drawing.Color.FromArgb(map[1, i, j, 0], map[1, i, j, 1], map[1, i, j, 2]);
                         tempimg1.SetPixel(i, j, colorForSet);
 
+
+                        //双线性插值
                         double temp;
                         if (_i == x0 || _j == y0)
                         {
@@ -279,6 +287,8 @@ namespace ImageTwisting
                         colorForSet = System.Drawing.Color.FromArgb(map[2, i, j, 0], map[2, i, j, 1], map[2, i, j, 2]);
                         tempimg2.SetPixel(i, j, colorForSet);
 
+
+                        //双三次插值
                         for (int t = 0; t < 4; ++t)
                         {
                             A[t] = S(u[1] + 1 - t);

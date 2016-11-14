@@ -12,7 +12,7 @@ namespace ImageTwisting
     /// </summary>
     public partial class MainWindow : Window
     {
-        public MainWindow()
+        public MainWindow()//图像旋转
         {
             InitializeComponent();
         }
@@ -26,6 +26,7 @@ namespace ImageTwisting
         System.Drawing.Color colorForSet;
         Bitmap tempimg1, tempimg2, tempimg3;
 
+        //选择图片
         private void chooseImg_Click(object sender, RoutedEventArgs e)
         {
             OpenFileDialog op = new Microsoft.Win32.OpenFileDialog();
@@ -89,6 +90,7 @@ namespace ImageTwisting
             {
                 for (int j = 0; j < r; ++j)
                 {
+                    //最近邻插值
                     x_now = i - x0;
                     y_now = y0 - j;
                     l = Math.Sqrt(Math.Pow(x_now, 2) + Math.Pow(y_now, 2));
@@ -104,6 +106,8 @@ namespace ImageTwisting
                     colorForSet = System.Drawing.Color.FromArgb(map[1, i, j, 0], map[1, i, j, 1], map[1, i, j, 2]);
                     tempimg1.SetPixel(i, j, colorForSet);
 
+
+                    //双线性插值
                     _i = x0 + x_pre;
                     _j = y0 - y_pre;
                     u[0] = Math.Ceiling(_i) - _i;
@@ -136,6 +140,8 @@ namespace ImageTwisting
                     colorForSet = System.Drawing.Color.FromArgb(map[2, i, j, 0], map[2, i, j, 1], map[2, i, j, 2]);
                     tempimg2.SetPixel(i, j, colorForSet);
 
+
+                    //双三次插值
                     for (int t = 0; t < 4; ++t)
                     {
                         A[t] = S(u[1] + 1 - t);

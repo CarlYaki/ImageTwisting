@@ -8,14 +8,17 @@ namespace ImageTwisting
 {
     class Tools
     {
+        //求插值基函数
         internal static double U(double r)
         {
             return Math.Pow(r, 2) * Math.Log(r/*Math.Pow(r, 2)*/);
         }
+        //求距离
         internal static double r(System.Windows.Point p1, System.Windows.Point p2)
         {
             return (p1 - p2).Length;
         }
+        //矩阵乘法
         internal static double[,] times(double[,] a, int r1, int c1, double[,] b, int r2, int c2)
         {
             if(c1!=r2)
@@ -35,6 +38,7 @@ namespace ImageTwisting
             }
             return ans;
         }
+        //矩阵行列式
         internal static double determinant(double[,] mat, int r, int c)
         {
             if (r != c)
@@ -89,6 +93,7 @@ namespace ImageTwisting
                 ans *= a[i, i];
             return ans;
         }
+        //矩阵求逆
         internal static double[,] inverse(double[,] a, int r, int c)
         {
             double[,] ans = new double[r, c];

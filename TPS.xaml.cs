@@ -160,7 +160,7 @@ namespace ImageTwisting
             c = bmp.Width + 4;
             map = new int[2, c, r, 3];
             img.Height = bmp.Height;
-            img.Width = bmp.Height;
+            img.Width = bmp.Width;
             for (int i = 0; i < c - 4; ++i)
             {
                 for (int j = 0; j < r - 4; ++j)
@@ -171,6 +171,7 @@ namespace ImageTwisting
                     map[0, i + 2, j + 2, 2] = pixelColor.B;
                 }
             }
+            dir.Width = (img.Width - 90) > 0 ? (img.Width - 90) : 0;
         }
 
         double[,] L;
